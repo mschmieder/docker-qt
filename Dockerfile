@@ -15,7 +15,7 @@ ARG QT_INSTALL_PACKAGES="qt.qt5.5110.gcc_64"
 ARG QT_INSTALL_DIR="/opt/qt"
 
 RUN cd /install && \
-    ./install_qt.sh --install-dir /opt/qt --install-dir "${QT_INSTALL_DIR}" --packages "${QT_INSTALL_PACKAGES}" && \
+    ./install_qt_silent.sh --install-dir /opt/qt --install-dir "${QT_INSTALL_DIR}" --packages "${QT_INSTALL_PACKAGES}" && \
     rm -rf /install
 
 RUN export QT_BIN_DIR=$(dirname $(find /opt/qt -name "qmake" | tail -n1))
