@@ -13,3 +13,8 @@ The silent installer `install_qt_silent.sh` also supports the installation on OS
 docker build -t docker-qt:5.9.4 --build-arg QT_INSTALL_PACKAGES="qt.qt5.5110.gcc_64" --build-arg QT_INSTALL_DIR=/opt/qt
 ```
 
+## Environment
+
+The docker image will expose the `QT_INSTALL_DIR` environment variable that will point to the location where QT was installed. 
+
+Further the path where `qmake` and `qbs` are located will be added to the system path by entering a custom `entrypoint`
