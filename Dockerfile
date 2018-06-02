@@ -9,7 +9,7 @@ RUN apt-get update && \
         gcc g++ build-essential xorg wget && \
     rm -rf /var/lib/apt/lists/*
 
-COPY install_qt.sh install_qt_silent.qs.template /install/
+COPY install_qt_silent.sh install_qt_silent.qs.template /install/
 
 ARG QT_INSTALL_PACKAGES="qt.qt5.5110.gcc_64"
 ARG QT_INSTALL_DIR="/opt/qt"
