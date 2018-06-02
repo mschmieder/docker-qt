@@ -11,7 +11,7 @@ RUN apt-get update && \
 
 COPY install_qt_silent.sh install_qt_silent.qs.template /install/
 
-ARG QT_INSTALL_PACKAGES="qt.qt5.5110.gcc_64"
+ARG QT_INSTALL_PACKAGES="qt.qt5.594.gcc_64"
 ARG QT_INSTALL_DIR="/opt/qt"
 
 ENV QT_INSTALL_DIR=$QT_INSTALL_DIR
