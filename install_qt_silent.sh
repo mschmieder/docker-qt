@@ -88,4 +88,4 @@ sed -i.bak "s,{{INSTALL_DIR}},${INSTALL_DIR},g" install_qt_silent.qs
 download_installer
 
 # run installer
-./${qt_unified_installer} --script install_qt_silent.qs #--verbose
+./${qt_unified_installer} --platform minimal --silent --script install_qt_silent.qs #--verbose
