@@ -1,0 +1,82 @@
+onStatusChange = function(status)
+{
+  console.log("status changed: "+status);
+  if( status == QInstaller.Failure ){
+     console.log("Installation failed! Exiting installer...");
+     gui.rejectWithoutPrompt();
+  }
+  else if (status == QInstaller.Canceled) {
+    console.log("Installation canceled! Exiting installer...");
+    gui.rejectWithoutPrompt();
+  }
+}
+
+function Controller()
+{
+    installer.autoRejectMessageBoxes;
+    installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.No);
+    installer.setMessageBoxAutomaticAnswer("TargetDirectoryInUse", QMessageBox.No);
+    installer.setMessageBoxAutomaticAnswer("stopProcessesForUpdates", QMessageBox.Ignore);
+
+    installer.installationFinished.connect(function(){
+        gui.clickButton(buttons.NextButton);
+    });
+
+    installer.statusChanged.connect(onStatusChange);
+}
+
+Controller.prototype.WelcomePageCallback = function() {
+    gui.clickButton(buttons.NextButton, 3000);
+}
+
+Controller.prototype.CredentialsPageCallback = function() {
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.IntroductionPageCallback = function() {
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.TargetDirectoryPageCallback = function()
+{
+    // check wether there has already been an installation to this directory
+    if (installer.fileExists("{{INSTALL_DIR}}/update.rcc")) {
+        installer.interrupt();
+    }
+    else {
+      gui.currentPageWidget().TargetDirectoryLineEdit.setText("{{INSTALL_DIR}}");
+      gui.clickButton(buttons.NextButton);
+    }
+}
+
+Controller.prototype.ComponentSelectionPageCallback = function() {
+    var widget = gui.currentPageWidget();
+   
+    widget.deselectAll();
+    
+    {{PACKAGE_LIST}}
+
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.LicenseAgreementPageCallback = function() {
+    gui.currentPageWidget().AcceptLicenseRadioButton.setChecked(true);
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.ReadyForInstallationPageCallback = function()
+{
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.StartMenuDirectoryPageCallback = function() {
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.FinishedPageCallback = function() {
+var checkBoxForm = gui.currentPageWidget().LaunchQtCreatorCheckBoxForm
+if (checkBoxForm && checkBoxForm.launchQtCreatorCheckBox) {
+    checkBoxForm.launchQtCreatorCheckBox.checked = false;
+}
+    gui.clickButton(buttons.FinishButton);
+}
